@@ -19,6 +19,7 @@
   "description": "",
   "dependencies": {
     "express": "^4.16.2",
+    "nodemon": "^1.13.3",
     "querystring": "^0.2.0",
     "smartsheet": "^1.0.3"
   }
