@@ -1,5 +1,5 @@
 
-# Sample oAuth Flow for Node
+# Sample OAuth Flow for Node
 
 Smartsheet uses [OAuth 2.0](https://oauth.net/2/) to authenticate and authorize users. If your app needs to interact with Smartsheet, then you'll need to create an OAuth Flow to [request an Access Token](https://smartsheet-platform.github.io/api-docs/#request-an-access-token).
 
