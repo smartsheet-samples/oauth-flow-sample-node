@@ -1,6 +1,6 @@
 
 # Sample OAuth Flow for Node
-Accessing Smartsheet through the API requires an access token to be included in the Authorization header of each request. For standalone applications that can run with your personal credentials, you can [generate an access token](https://smartsheet-platform.github.io/api-docs/#authentication-and-access-tokens)in the Smartsheet UI. However, if your application needs to let users login with their own account, then you must implement the full [Oauth flow](https://smartsheet-platform.github.io/api-docs/#oauth-flow).
+Accessing Smartsheet through the API requires an access token to be included in the Authorization header of each request. For standalone applications that can run with your personal credentials, you can [generate an access token](https://smartsheet-platform.github.io/api-docs/#authentication-and-access-tokens) in the Smartsheet UI. However, if your application needs to let users login with their own account, then you must implement the full [Oauth flow](https://smartsheet-platform.github.io/api-docs/#oauth-flow).
 
 This sample demonstrates a lightweight implementation of the Smartsheet OAuth flow using an express server. To configure this sample to work for with your own app there are three important changes to pay attention to:
 - Register your application with Smartsheet and fill out all the fields. 
@@ -31,7 +31,6 @@ This sample demonstrates a lightweight implementation of the Smartsheet OAuth fl
 	 ![enter image description here](https://lh3.googleusercontent.com/-A5IFP3Esa94/Wjmw5x5_MZI/AAAAAAAAAJs/vTXXwHhX3lIC3Ztu1zqKpTVmOyYWylzlgCLcBGAs/s0/Screen+Shot+2017-12-19+at+4.34.35+PM.png "SmartsheetAuthPermission")
 	 - Click **Allow**. You should be sent to your redirect URL with your shiny new access token displayed on the page.
 	 ![enter image description here](https://lh3.googleusercontent.com/Fi8d-Bd62BHhsOiBKdIvbAY2lzSFgDU7fIPOvv5FarUb_gzTo2lK21-y5HhSKYNxe3NI5e-11y76=s0 "ReturnedToken")
- 5. Rejoice!
 
 Congratulations! You now have a working OAuth flow that successfully (read: hopefully) requests and retrieves an access token from Smartsheet. This access token can be used in your app to interact directly with the Smartsheet API. 
 
