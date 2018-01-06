@@ -58,3 +58,5 @@ typings/
 .env
 
 /config_priv.json
+
+/token_priv.json
