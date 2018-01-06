@@ -1,13 +1,13 @@
-// loading the relevant modules
 const express = require('express'),
-    config = require('./config_priv.json'),
+    config = require('./config.json'),
     qs = require('querystring'),
     ssclient = require('smartsheet'),
-    app = express();
+    app = express(),
+    fs = require('fs');
 
 // instantiating the Smartsheet client
 const smartsheet = ssclient.createClient({
-    // a blank token provides access to token endpoints
+    // a blank token provides access to Smartsheet token endpoints
     accessToken: ''
 });
 
@@ -18,12 +18,12 @@ app.listen(3000, () => {
 
 // setting up home route containing basic page content
 app.get('/', (req, res) => {
-    res.send('<h1>Sample oAuth flow for Smartsheet</h1><a href="/auth">Login to Smartsheet</a>')
+    res.send('<h1>Sample oAuth flow for Smartsheet</h1><a href="/auth">Login to Smartsheet</a></br><a href="/refresh">Refresh Token</a>')
 });
 
-// route redirecting to our authorization page
+// route redirecting to authorization page
 app.get('/auth', (req, res) => {
-    console.log(authorizationUri);
+    console.log('Your authorization url: ', authorizationUri);
     res.redirect(authorizationUri);
 });
 
@@ -35,10 +35,10 @@ function authorizeURL(params) {
 const authorizationUri = authorizeURL({
     response_type: 'code',
     client_id: config.APP_CLIENT_ID,
-    scope: 'CREATE_SHEETS WRITE_SHEETS'
+    scope: config.ACCESS_SCOPE
 });
 
-// callback service parses the authorization code and requests access token
+// callback service parses the authorization code, requests access token, and saves it 
 app.get('/callback', (req, res) => {
     const authCode = req.query.code;
     const generated_hash = require('crypto')
@@ -52,14 +52,64 @@ app.get('/callback', (req, res) => {
             hash: generated_hash
         }
     };
-    smartsheet.tokens.getAccessToken(options, (error, result) => {
-        if (error) {
-            console.error('Access Token Error:', error.message);
-            return res.json('Authentication failed');
-        }
-        console.log('The resulting token: ', result);
-        return res
-            .status(200)
-            .json(result);
-    });
+    smartsheet.tokens.getAccessToken(options, processToken)
+        .then((token) => {
+            return res
+                .status(200)
+                .json(token);
+        });
 });
+
+// Sample for REFERENCE ONLY. A production app should not be structured this way. 
+app.get('/refresh', (req, res) => {
+    fs.access('token_priv.json', (err) => {
+        // redirect to normal oauth flow if no existing token
+        if (err && err.code === 'ENOENT') {
+            res.redirect(authorizationUri);
+        }
+        console.log('...Refreshing Expired Token...')
+        const old_token = require('./token_priv.json');
+        // if current date is past expiration date...
+        if (Date.now() > old_token.EXPIRES_IN) {
+            const generated_hash = require('crypto')
+                .createHash('sha256')
+                .update(config.APP_SECRET + "|" + old_token.REFRESH_TOKEN)
+                .digest('hex');
+            const options = {
+                queryParameters: {
+                    client_id: config.APP_CLIENT_ID,
+                    refresh_token: old_token.REFRESH_TOKEN,
+                    hash: generated_hash
+                }
+            };
+            smartsheet.tokens.refreshAccessToken(options, processToken)
+                .then((token) => {
+                    return res
+                        .status(200)
+                        .json(token);
+                });
+        } else {
+            // token still valid. If attempting to force token refresh, change expires_in in priv_token.json
+            console.log('token still valid')
+        }
+    })
+})
+
+
+function processToken(error, token) {
+    if (error) {
+        console.error('Access Token Error:', error.message);
+        return error;
+    }
+    console.log('The resulting token: ', token);
+    // IMPORTANT: token saved to local JSON as EXAMPLE ONLY. 
+    // You should save access_token, refresh_token, and expires_in to database for use in application.
+    let returned_token = {
+        "ACCESS_TOKEN": token.access_token,
+        "EXPIRES_IN": (Date.now() + (token.expires_in * 1000)),
+        "REFRESH_TOKEN": token.refresh_token
+    }
+    fs.writeFileSync('token_priv.json', JSON.stringify(returned_token));
+
+    return token;
+}
