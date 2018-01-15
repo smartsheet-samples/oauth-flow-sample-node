@@ -1,5 +1,5 @@
 const express = require('express'),
-    config = require('./config.json'),
+    config = require('./config_priv.json'),
     qs = require('querystring'),
     ssclient = require('smartsheet'),
     app = express(),
@@ -40,6 +40,7 @@ const authorizationUri = authorizeURL({
 
 // callback service parses the authorization code, requests access token, and saves it 
 app.get('/callback', (req, res) => {
+    console.log(req.query);
     const authCode = req.query.code;
     const generated_hash = require('crypto')
         .createHash('sha256')
@@ -65,6 +66,7 @@ app.get('/refresh', (req, res) => {
     fs.access('token_priv.json', (err) => {
         // redirect to normal oauth flow if no existing token
         if (err && err.code === 'ENOENT') {
+            console.log(err);
             res.redirect(authorizationUri);
         }
         console.log('...Refreshing Expired Token...')
@@ -91,6 +93,8 @@ app.get('/refresh', (req, res) => {
         } else {
             // token still valid. If attempting to force token refresh, change expires_in in priv_token.json
             console.log('token still valid')
+            return res
+                .send('<h1>No refresh. Access token still valid</h1>');
         }
     })
 })

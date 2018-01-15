@@ -37,7 +37,8 @@ This sample demonstrates a lightweight implementation of the Smartsheet OAuth fl
 Congratulations! You now have a working OAuth flow that successfully (read: hopefully) requests and retrieves an access token from Smartsheet. This access token can be used in your app to interact directly with the Smartsheet API. 
 
 #### Refreshing the Access Token
-You'll need to periodically refresh the Access Token as it expires 7 days after being issued. However, rather than going through the full OAuth Flow again, a better option is to use the Refresh Token. Once you've gone through an OAuth Flow a file is saved named `token_priv.json`. You can force an *expired* Access Token by manually changing the token expiration date in this file. Specifically, you need to change EXPIRES_IN to a date time that is earlier than the *current* date time.
+You'll need to periodically refresh the Access Token as it expires 7 days after being issued. However, rather than going through the full OAuth Flow again, a better option is to use the Refresh Token. Using the refresh_token from your the last successful authorization, you can make a call to a refresh token endpoint to issue a new authorization token.
+In **this sample only**, once you've gone through an OAuth Flow a file is saved named `token_priv.json`. You can force an *expired* Access Token by manually changing the token expiration date in this file. Specifically, you need to change EXPIRES_IN to a date time that is earlier than the *current* date time.
 
 **Important**: This sample app runs on localhost, but implementing OAuth on a production application will have some major differences. The key things to pay attention to:
 - The tokens **must** be handled in a more secure way. They should be stored in a database. The use of a JSON file is **only** for this sample.
