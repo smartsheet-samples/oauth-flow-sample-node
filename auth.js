@@ -1,5 +1,5 @@
 const express = require('express'),
-    config = require('./config_priv.json'),
+    config = require('./config.json'),
     qs = require('querystring'),
     ssclient = require('smartsheet'),
     app = express(),
