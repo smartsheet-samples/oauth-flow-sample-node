@@ -1,5 +1,6 @@
 
 # Sample OAuth Flow for Node
+You can check out [this blog post](https://developers.smartsheet.com/blog/creating-smartsheet-oauth-flow-in-node) for a more detailed explanation of Smartsheet's OAuth Flow.
 Accessing Smartsheet through the API requires an access token to be included in the Authorization header of each request. For standalone applications that can run with your personal credentials, you can [generate an access token](https://smartsheet-platform.github.io/api-docs/#authentication-and-access-tokens) in the Smartsheet UI. However, if your application needs to let users login with their own account, then you must implement the full [Oauth flow](https://smartsheet-platform.github.io/api-docs/#oauth-flow).
 
 This sample demonstrates a lightweight implementation of the Smartsheet OAuth flow using an express server. To configure this sample to work for with your own app there are three important changes to pay attention to:
