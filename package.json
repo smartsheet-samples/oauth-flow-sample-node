@@ -1,6 +1,6 @@
 {
   "name": "oauth-flow-sample-node",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "auth.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -21,6 +21,6 @@
     "express": "^4.16.2",
     "nodemon": "^1.13.3",
     "querystring": "^0.2.0",
-    "smartsheet": "^1.0.3"
+    "smartsheet": "^1.3.0"
   }
 }
