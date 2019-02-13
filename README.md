@@ -9,7 +9,7 @@ This sample demonstrates a lightweight implementation of the Smartsheet OAuth fl
 - Double check the **Redirect URL** in app settings. Smartsheet will **only** send the authorization code to that URL. This example uses localhost:3000/callback but your app will have its' own **Redirect URL**. 
 
 #### Step 1: Register a Developer Account
- - [Register a developer account](https://developers.smartsheet.com/register) with Smartsheet. This gives your Smartsheet account access to 'Developer Tools'.
+ - [Register a developer account](https://developers.smartsheet.com/register) with Smartsheet. This gives your Smartsheet account access to 'Developer Tools'. Registering for a developer account will create a new Smartsheet account. Be sure to use an email address that isn't already associated with an existing Smartsheet account.
 
 #### Step 2: Register Your App with Smartsheet 
 
@@ -26,10 +26,17 @@ This sample demonstrates a lightweight implementation of the Smartsheet OAuth fl
 #### Step 3: Create the OAuth Flow
   
  1. Open the `config.json` file and replace the placeholder values with the ***client Id*** and ***client secret*** from your app. You also need to specify the desired [**access scopes**](https://smartsheet-platform.github.io/api-docs/#access-scopes).
-![enter image description here](https://lh3.googleusercontent.com/k19W1c6jhXYRkPn4iL_JblATAquspKxeYj4oga2XzP9XNoBRX80CVyM3k2e3GCgTiT5y8qeXemyC=s0 "configJSON.png")
- 2. Run `npm install` to download the modules
- 3. Start the app with `node auth.js`
- 4. Go to *localhost:3000* in your browser. Click through the OAuth flow to make sure everything works.
+For this example, we'll just provide access to `READ_SHEETS`.
+```
+{
+  "APP_CLIENT_ID": "your_client_id",
+  "APP_SECRET": "your_client_secret",
+  "ACCESS_SCOPE":"READ_SHEETS"
+}
+```
+ 1. Run `npm install` to download the modules
+ 2. Start the app with `node auth.js`
+ 3. Go to *localhost:3000* in your browser. Click through the OAuth flow to make sure everything works.
 	 - Click **Login to Smartsheet**. You should be redirected to this window:
 	 ![enter image description here](https://lh3.googleusercontent.com/-A5IFP3Esa94/Wjmw5x5_MZI/AAAAAAAAAJs/vTXXwHhX3lIC3Ztu1zqKpTVmOyYWylzlgCLcBGAs/s0/Screen+Shot+2017-12-19+at+4.34.35+PM.png "SmartsheetAuthPermission")
 	 - Click **Allow**. You should be sent to your redirect URL with your shiny new access token displayed on the page.
@@ -44,4 +51,4 @@ In **this sample only**, once you've gone through an OAuth Flow a file is saved 
 **Important**: This sample app runs on localhost, but implementing OAuth on a production application will have some major differences. The key things to pay attention to:
 - The tokens **must** be handled in a more secure way. They should be stored in a database. The use of a JSON file is **only** for this sample.
 - The *Redirect URL* must be set to a secure URL on the production server that the developer has control over so the authorization code is safe and can be easily captured.
-- Make sure the App Description is polished on Smartsheet. Any customers going following the OAuth Flow will see the app description.
+- Make sure the App Description is polished on Smartsheet. Any customers following the OAuth Flow will see the app description in the authorization window.

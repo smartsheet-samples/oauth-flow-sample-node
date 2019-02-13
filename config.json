@@ -1,5 +1,5 @@
 {
   "APP_CLIENT_ID": "your_client_id",
   "APP_SECRET": "your_client_secret",
-  "ACCESS_SCOPE":"your_scopes"
+  "ACCESS_SCOPE":"READ_SHEETS"
 }
