@@ -1,12 +1,12 @@
 const express = require('express'),
     config = require('./config.json'),
     qs = require('querystring'),
-    ssclient = require('smartsheet'),
+    smarclient = require('smartsheet'),
     app = express(),
     fs = require('fs');
 
 // instantiating the Smartsheet client
-const smartsheet = ssclient.createClient({
+const smartsheet = smarclient.createClient({
     // a blank token provides access to Smartsheet token endpoints
     accessToken: ''
 });
