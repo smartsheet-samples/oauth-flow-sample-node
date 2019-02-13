@@ -6,7 +6,7 @@ Accessing Smartsheet through the API requires an access token to be included in 
 This sample demonstrates a lightweight implementation of the Smartsheet OAuth flow using an express server. To configure this sample to work for with your own app there are three important changes to pay attention to:
 - Register your application with Smartsheet and fill out all the fields. 
 - Changing the `config.json` file to include the client id and client secret of your app.
-- Double check the **Redirect URL** in app settings. Smartsheet will **only** send the authorization code to that URL. This example uses localhost:3000/callback but your app will have its' own **Redirect URL**. 
+- Double check the **Redirect URL** in app settings. Smartsheet will **only** send the authorization code to that URL. This example uses `localhost:3000/callback` but your app will have its' own **Redirect URL**. 
 
 #### Step 1: Register a Developer Account
  - [Register a developer account](https://developers.smartsheet.com/register) with Smartsheet. This gives your Smartsheet account access to 'Developer Tools'. Registering for a developer account will create a new Smartsheet account. Be sure to use an email address that isn't already associated with an existing Smartsheet account.
